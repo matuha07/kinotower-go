@@ -1,0 +1,18 @@
+services:
+  kinotower-postgres:
+    image: postgres:18.3-alpine
+    container_name: kinotower-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: kinotower
+    ports:
+      - "5467:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql
+
+  kinotower-postgres-migrate:
+    image: migrate/migrate:v4.19.1
+    container_name: kinotower-postgres-migrate
+    volumes:
+      - ./migrations:/migrations
