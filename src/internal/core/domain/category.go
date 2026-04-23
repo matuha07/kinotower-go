@@ -1,8 +1,7 @@
 package domain
 
 type Category struct {
-	ID             int
-	Name           string
-	ParentCategory *Category
-	FilmCount      *int
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	FilmCount *int   `json:"filmCount,omitempty"`
 }

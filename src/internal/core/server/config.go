@@ -7,7 +7,8 @@ import (
 )
 
 type Config struct {
-	Addr string `envconfig:"HTTP_PORT" default:":8080"`
+	Addr      string `envconfig:"HTTP_PORT" default:":8080"`
+	JWTSecret string `envconfig:"JWT_SECRET" default:"change-me-in-production"`
 }
 
 func NewConfig() (*Config, error) {

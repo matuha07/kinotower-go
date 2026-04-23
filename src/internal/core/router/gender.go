@@ -9,8 +9,6 @@ import (
 func (r *Router) genderRoutes() http.Handler {
 	router := chi.NewRouter()
 
-	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Genders"))
-	})
+	router.Get("/", r.filmHandler.GetGenders)
 	return router
 }
