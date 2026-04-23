@@ -7,20 +7,22 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	core_logger "github.com/matuha07/kinotower-go/src/internal/core/logger"
+	film_handler "github.com/matuha07/kinotower-go/src/internal/features/films/handler"
 )
 
 type Router struct {
-	mux *chi.Mux
+	mux         *chi.Mux
+	filmHandler *film_handler.FilmHandler
 }
 
-func NewRouter() *Router {
-	r := &Router{mux: chi.NewRouter()}
+func NewRouter(filmHandler *film_handler.FilmHandler) *Router {
+	r := &Router{mux: chi.NewRouter(), filmHandler: filmHandler}
 	r.mux.Use(middleware.RequestID)
 	r.mux.Use(core_logger.HTTPMiddleware(slog.Default()))
 	r.mux.Use(middleware.Recoverer)
 
 	r.mux.Route("/api/v1", func(rl chi.Router) {
-		rl.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		rl.Get("/", func(w http.ResponseWriter, _ *http.Request) {
 			w.Write([]byte("Welcome to the API!"))
 		})
 		rl.Mount("/films", r.filmRoutes())

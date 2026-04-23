@@ -1,6 +1,7 @@
 package core_logger
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -38,7 +39,7 @@ func (e *chiEntry) Write(status, bytes int, _ http.Header, elapsed time.Duration
 	} else if status >= 400 {
 		level = slog.LevelWarn
 	}
-	e.log.Log(nil, level, fmt.Sprintf("%s %s", e.method, e.path),
+	e.log.Log(context.TODO(), level, fmt.Sprintf("%s %s", e.method, e.path),
 		"status", status,
 		"bytes", bytes,
 		"duration", elapsed.Round(time.Microsecond),
